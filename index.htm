@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+
+  <body style="height: 100vh; background-color: #f5f7f6;">
+    <script type="text/javascript">
+      function validateInput() {
+        const isDelighted = $('#delighted').is(':checked');
+        const isDonate = $('#donate').is(':checked');
+        const isNotDelighted = $('#not-delighted').is(':checked');
+        const reason = $('#reason').val().trim();
+        const divError = $('.error-message').last();
+        console.log(isDelighted, isDonate, isNotDelighted, reason);
+
+        if (isNotDelighted) {
+          if (isDonate) {
+            divError.text('RULE 1 BROKEN');
+            return false;
+          }
+          if (!reason) {
+            divError.text('RULE 2 BROKEN');
+          }
+          return false;
+        }
+        divError.text('');
+        return false;
+      }
+      document.body.innerHTML = `
+<div class="error-message">
+  <!-- Display error message here -->
+</div>
+
+<form id="feedback" onsubmit="return validateInput()">
+  <input type="radio" id="delighted" name="delighted" checked="checked" required /> Delighted
+  <input type="checkbox" id="donate" name="donate" /> Donate<br />
+  <input type="radio" id="not-delighted" name="delighted" required /> Not delighted
+  <input type="text" id="reason" name="reason" /> Reason<br />
+  <input type="submit" value="Submit" />
+</form>`;
+
+      validateInput();
+
+      console.log($('.error-message').html());
+    </script>
+  </body>
+</html>
